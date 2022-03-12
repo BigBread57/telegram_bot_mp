@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "bot_mp"
+version = "0.1.0"
+description = ""
+authors = ["Mazur Gleb <mag@letsnova.ru>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "^2.19"
+SQLAlchemy-Utils = "^0.38.2"
+psycopg2-binary = "^2.9.3"
+SQLAlchemy = "^1.4.31"
+python-decouple = "^3.6"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

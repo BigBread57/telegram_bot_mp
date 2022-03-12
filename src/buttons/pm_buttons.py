@@ -36,12 +36,12 @@ accepted_status = InlineKeyboardButton(text='Подтвердить', callback_d
 denied_status = InlineKeyboardButton(text='Отклонить', callback_data='3')
 discussion_status = InlineKeyboardButton(text='Обсудить', callback_data='4')
 url_jira = InlineKeyboardButton(text='Добавить ссылку на jira', callback_data='5')
-note = InlineKeyboardButton(text='Добавить комментарий к задаче', callback_data='6')
+comment = InlineKeyboardButton(text='Добавить комментарий к задаче', callback_data='6')
 for_jira = InlineKeyboardButton(text='Скопировать инфомрацию для Jira', callback_data='7')
 
 action_pm_buttons.row(
     delete, accepted_status
 ).row(
     denied_status, discussion_status
-).add(url_jira).add(note).add(for_jira)
+).add(url_jira).add(comment).add(for_jira)
 

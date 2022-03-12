@@ -10,7 +10,7 @@ from src.data_base.request_for_db.utils import definition_task_id, change_url_ji
 class FSMNewUrl(StatesGroup):
     """Класс конечных автоматов для jira."""
     url = State()
-    note = State()
+    comment = State()
 
 
 async def start_add_new_url_jira(callback: types.CallbackQuery):
@@ -52,19 +52,19 @@ async def load_url(message: types.Message, state: FSMContext):
             )
 
 
-async def load_note(message: types.Message, state: FSMContext):
+async def load_comment(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         if message.text == '/cancel_pm':
             await cancel_add_new_url_jira(message, state)
         elif message.text == '/skip_pm':
-            data['note'] = (
+            data['comment'] = (
                     'Не забудьте оценить время работы над задачей, ' +
                     'следите за статусом ее исполения, ' +
                     'оставляйте комментарии в случае возникших ' +
                     'трудностей или пишите своему ПМ'
             )
         else:
-            data['note'] = message.text
+            data['comment'] = message.text
 
     if data['flag'] == 'new':
         await add_url_jira_in_db(state)
@@ -89,7 +89,7 @@ def register_handlers_jira(dp: Dispatcher):
     """Регистрация обработчиков"""
     dp.register_callback_query_handler(start_add_new_url_jira, state=None)
     dp.register_message_handler(load_url, state=FSMNewUrl.url)
-    dp.register_message_handler(load_note, state=FSMNewUrl.note)
+    dp.register_message_handler(load_comment, state=FSMNewUrl.comment)
     dp.register_message_handler(cancel_add_new_url_jira, state="*", commands='cancel_pm')
     dp.register_message_handler(
         cancel_add_new_url_jira,

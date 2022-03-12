@@ -19,13 +19,13 @@ DATABASES = {
     'port': config('PORT'),
 }
 
-DICT_PM = {}
-
-with open(f'{BASE_DIR}/pm.txt', 'r') as f:
-    text = f.read()
-text_element = re.findall(r'\w+', text)
-
-key = text_element[::2]
-value = text_element[1::2]
-for k, v in zip(key, value):
-    DICT_PM.update({k: int(v)})
+# DICT_PM = {}
+#
+# with open(f'{BASE_DIR}/pm.txt', 'r') as f:
+#     text = f.read()
+# text_element = re.findall(r'\w+', text)
+#
+# key = text_element[::2]
+# value = text_element[1::2]
+# for k, v in zip(key, value):
+#     DICT_PM.update({k: int(v)})

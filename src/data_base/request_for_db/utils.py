@@ -3,8 +3,8 @@ import re
 from src.buttons.pm_buttons import action_pm_buttons
 from src.data_base import current_session
 from src.data_base.model.file import File
-from src.data_base.model.jira import JiraUrl
-from src.data_base.model.note import Note
+from src.data_base.model.task_in_jira import JiraUrl
+from src.data_base.model.comment import Comment
 from src.data_base.model.pm import Pm
 from src.data_base.model.task import Task
 from src.data_base.request_for_db.view_answer import (
@@ -43,24 +43,24 @@ async def division_message(message, tasks, status, pm, client):
             chat_id = client
             status_user = 'client'
 
-        for task, file, note, jira in tasks:
+        for task, file, comment, jira in tasks:
             if not file:
                 if status_user == 'pm':
-                    await send_answer(task, note, jira, chat_id, action_pm_buttons)
+                    await send_answer(task, comment, jira, chat_id, action_pm_buttons)
                 else:
-                    await send_answer(task, note, jira, chat_id, None)
+                    await send_answer(task, comment, jira, chat_id, None)
 
             elif file.type == 'photo':
                 if status_user == 'pm':
-                    await send_photo(task, note, jira, chat_id, file.file, action_pm_buttons)
+                    await send_photo(task, comment, jira, chat_id, file.file, action_pm_buttons)
                 else:
-                    await send_photo(task, note, jira, chat_id, file.file, None)
+                    await send_photo(task, comment, jira, chat_id, file.file, None)
 
             elif file.type == 'document':
                 if status_user == 'pm':
-                    await send_document(task, note, jira, chat_id, file.file, action_pm_buttons)
+                    await send_document(task, comment, jira, chat_id, file.file, action_pm_buttons)
                 else:
-                    await send_document(task, note, jira, chat_id, file.file, None)
+                    await send_document(task, comment, jira, chat_id, file.file, None)
 
     else:
         await bot.send_message(chat_id=message.chat['id'], text=f'Нет задач со статусом {status}.')
@@ -133,9 +133,9 @@ async def change_url_jira_for_task(task_id):
         return True
 
 
-async def change_note_for_task(task_id):
+async def change_comment_for_task(task_id):
     """Проверка на наличие заметки для задачи."""
-    count_task = current_session.query(Note).filter_by(task_id=task_id).one_or_none()
+    count_task = current_session.query(Comment).filter_by(task_id=task_id).one_or_none()
     if count_task:
         return False
     else:
@@ -144,8 +144,8 @@ async def change_note_for_task(task_id):
 
 async def qs():
     """ПОлучение всех свзяных объектов с task."""
-    tasks = current_session.query(Task, File, Note, JiraUrl)
+    tasks = current_session.query(Task, File, Comment, JiraUrl)
     tasks = tasks.outerjoin(File, File.task_id == Task.id)
-    tasks = tasks.outerjoin(Note, Note.task_id == Task.id)
+    tasks = tasks.outerjoin(Comment, Comment.task_id == Task.id)
     tasks = tasks.outerjoin(JiraUrl, JiraUrl.task_id == Task.id)
     return tasks

@@ -1,1 +1,1 @@
-from src.handlers.pm import action_pm, jira, note
+from src.handlers.pm import action_pm, jira, comment

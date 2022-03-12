@@ -17,7 +17,7 @@ list_task.register_handlers_list_task(dp)
 task.register_handlers_client_task(dp)
 action_pm.register_handlers_action_pm(dp)
 jira.register_handlers_jira(dp)
-note.register_handlers_note(dp)
+note.register_handlers_comment(dp)
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True, on_startup=on_startup)

@@ -5,7 +5,7 @@ from src.data_base.request_for_db.change_db_pm import (
 )
 from src.data_base.request_for_db.view_answer import send_answer_for_jira
 from src.handlers.pm.jira import start_add_new_url_jira
-from src.handlers.pm.note import start_add_new_note
+from src.handlers.pm.comment import start_add_new_comment
 
 
 async def action_pm(callback: types.CallbackQuery):
@@ -37,7 +37,7 @@ async def action_pm(callback: types.CallbackQuery):
     elif callback.data == '5':  # добавление ссылки на Jira
         await start_add_new_url_jira(callback)
     elif callback.data == '6':  # добавление заметки к задаче
-        await start_add_new_note(callback)
+        await start_add_new_comment(callback)
     elif callback.data == '7':  # Выдача информации для копирования в Jira
         await send_answer_for_jira(callback)
 

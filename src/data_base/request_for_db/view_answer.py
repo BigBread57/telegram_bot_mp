@@ -35,11 +35,11 @@ answer_for_jira = (
 )
 
 
-async def send_answer(task, note, jira, chat_id, reply_markup):
+async def send_answer(task, comment, jira, chat_id, reply_markup):
     """Функция для отправки сообщения."""
-    note_text = await chek_note(note)
+    comment_text = await chek_comment(comment)
     jira_url = await chek_jira(jira, 'url')
-    jira_note = await chek_jira(jira, 'note')
+    jira_comment = await chek_jira(jira, 'comment')
     await bot.send_message(
         chat_id=chat_id,
         text=answer.format(
@@ -53,19 +53,19 @@ async def send_answer(task, note, jira, chat_id, reply_markup):
             task.consultation,
             task.responsible,
             task.status,
-            note_text,
+            comment_text,
             jira_url,
-            jira_note,
+            jira_comment,
         ),
         reply_markup=reply_markup,
     )
 
 
-async def send_photo(task, note, jira, chat_id, photo, reply_markup):
+async def send_photo(task, comment, jira, chat_id, photo, reply_markup):
     """Функция для отправки фотографии и сообщения."""
-    note_text = await chek_note(note)
+    comment_text = await chek_comment(comment)
     jira_url = await chek_jira(jira, 'url')
-    jira_note = await chek_jira(jira, 'note')
+    jira_comment = await chek_jira(jira, 'comment')
     await bot.send_photo(
         chat_id=chat_id,
         photo=photo,
@@ -80,19 +80,19 @@ async def send_photo(task, note, jira, chat_id, photo, reply_markup):
             task.consultation,
             task.responsible,
             task.status,
-            note_text,
+            comment_text,
             jira_url,
-            jira_note,
+            jira_comment,
         ),
         reply_markup=reply_markup,
     )
 
 
-async def send_document(task, note, jira, chat_id, document, reply_markup):
+async def send_document(task, comment, jira, chat_id, document, reply_markup):
     """Функция для отправки документа и сообщения."""
-    note_text = await chek_note(note)
+    comment_text = await chek_comment(comment)
     jira_url = await chek_jira(jira, 'url')
-    jira_note = await chek_jira(jira, 'note')
+    jira_comment = await chek_jira(jira, 'comment')
     await bot.send_document(
         chat_id=chat_id,
         document=document,
@@ -107,9 +107,9 @@ async def send_document(task, note, jira, chat_id, document, reply_markup):
             task.consultation,
             task.responsible,
             task.status,
-            note_text,
+            comment_text,
             jira_url,
-            jira_note,
+            jira_comment,
         ),
         reply_markup=reply_markup,
     )
@@ -132,10 +132,10 @@ async def send_answer_for_jira(callback):
     )
 
 
-async def chek_note(note):
-    """Проверка существования Note для отправки сообщения."""
-    if note:
-        return note.text
+async def chek_comment(comment):
+    """Проверка существования comment для отправки сообщения."""
+    if comment:
+        return comment.text
     else:
         return ''
 
@@ -146,5 +146,5 @@ async def chek_jira(jira, field):
         if field == 'url':
             return jira.url
         else:
-            return jira.note
+            return jira.comment
     return ''
